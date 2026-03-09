@@ -1,0 +1,1955 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>موسوعة التخدير - اختبار العناية المركزة العصبية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *{
+            text-decoration: none;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        /* أنماط أساسية */
+        :root {
+            /* Base typography scale: change --base-font-size to adjust whole UI */
+            --base-font-size: 16px; /* sensible default for desktop */
+            --primary-color: #6a1b9a;
+            --secondary-color: #9c27b0;
+            --text-color: #2d3748;
+            --light-color: #f8fafc;
+            --bg-color: #ffffff;
+            --card-bg: #f8fafc;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.3s ease;
+        }
+
+        /* Set base font-size on the root so rem and clamp values scale predictably */
+        html {
+            font-size: var(--base-font-size);
+            -webkit-text-size-adjust: 100%; /* prevent iOS from auto-scaling text */
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #9c27b0;
+            --secondary-color: #ba68c8;
+            --text-color: #f7fafc;
+            --bg-color: #1a202c;
+            --card-bg: #2d3748;
+            --border-color: #4a5568;
+            --light-color: #2d3748;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            line-height: 1.6;
+            font-family: 'Tajawal', sans-serif;
+            /* Use rem-based sizing so components (using clamp/rem) are consistent */
+            font-size: 1rem; /* equals --base-font-size (16px by default) */
+            min-height: 100vh;
+        }
+
+        /* أنماط شريط التنقل */
+        .navbar {
+            background-color: var(--bg-color);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+        }
+
+        .navbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: clamp(1.2rem, 4vw, 1.7rem);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo i {
+            margin-left: 0.5rem;
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            color: var(--primary-color);
+        }
+
+        .logo-text {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 800;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 4px 10px rgba(106, 27, 154, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(to right, #7b1fa2, #8e24aa);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(106, 27, 154, 0.4);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.8rem;
+            transition: var(--transition);
+            padding: 0.5rem;
+        }
+
+        .hamburger:hover {
+            color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        /* قائمة الجوال */
+        .mobile-menu {
+            display: none;
+            background-color: var(--card-bg);
+            padding: 1.5rem 1rem;
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.3s ease-out;
+            width: 100%;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .mobile-buttons .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* المحتوى الرئيسي */
+        .main-content {
+            padding: 2rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .hero h1 {
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.3;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* أنماط الاختبار */
+        .quiz-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--primary-color);
+            width: 100%;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .question-number {
+            font-size: clamp(1.1rem, 3vw, 1.2rem);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .quiz-timer {
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .quiz-progress {
+            background-color: var(--light-color);
+            height: 10px;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .quiz-progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .question-container {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .question-text {
+            font-size: clamp(1.1rem, 3.5vw, 1.3rem);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            line-height: 1.5;
+            text-align: left;
+            direction: ltr;
+            flex: 1;
+        }
+
+        .help-icon {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+            font-size: 1.1rem;
+        }
+
+        .help-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .explanation {
+            background-color: var(--light-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border-right: 4px solid var(--primary-color);
+            display: none;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            line-height: 1.6;
+            text-align: left;
+            direction: ltr;
+        }
+
+        .explanation.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .page-reference {
+            display: block;
+            margin-top: 0.5rem;
+            font-style: italic;
+            color: var(--secondary-color);
+            font-weight: 500;
+            text-align: left;
+            direction: ltr;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .option {
+            background-color: var(--light-color);
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            text-align: left;
+            direction: ltr;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            line-height: 1.4;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover {
+            background-color: var(--border-color);
+            transform: translateY(-2px);
+        }
+
+        .option.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(106, 27, 154, 0.1);
+        }
+
+        .option.correct {
+            border-color: #4caf50;
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+
+        .option.incorrect {
+            border-color: #f44336;
+            background-color: rgba(244, 67, 54, 0.1);
+        }
+
+        .option.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .feedback-message {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .feedback-correct {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            border: 2px solid #4caf50;
+        }
+
+        .feedback-incorrect {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+            border: 2px solid #f44336;
+        }
+
+        .quiz-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .quiz-actions .btn {
+            flex: 1;
+            min-width: 140px;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            padding: 0.8rem 1rem;
+        }
+
+        .result-container {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .result-score {
+            font-size: clamp(2rem, 8vw, 3rem);
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 1rem 0;
+        }
+
+        .result-message {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .result-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .result-actions .btn {
+            min-width: 160px;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            padding: 0.8rem 1.5rem;
+        }
+
+        .detailed-results {
+            margin-top: 2rem;
+            text-align: right;
+        }
+
+        .detailed-results h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+        }
+
+        .question-review {
+            background-color: var(--light-color);
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-right: 4px solid var(--border-color);
+        }
+
+        .question-review.correct {
+            border-right-color: #4caf50;
+        }
+
+        .question-review.incorrect {
+            border-right-color: #f44336;
+        }
+
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            text-align: left;
+            direction: ltr;
+            line-height: 1.5;
+        }
+
+        .review-answer {
+            margin: 0.5rem 0;
+            padding: 0.8rem;
+            border-radius: 6px;
+            text-align: right;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            line-height: 1.4;
+        }
+
+        .user-answer {
+            background-color: rgba(59, 130, 246, 0.1);
+            border-right: 3px solid #3b82f6;
+        }
+
+        .correct-answer {
+            background-color: rgba(34, 197, 94, 0.1);
+            border-right: 3px solid #22c55e;
+        }
+
+        .answer-status {
+            display: inline-block;
+            margin-right: 0.5rem;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .answer-status.correct {
+            color: #22c55e;
+        }
+
+        .answer-status.incorrect {
+            color: #ef4444;
+        }
+
+        .test-history {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-top: 2rem;
+            box-shadow: var(--shadow);
+            width: 100%;
+        }
+
+        .test-history h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-date {
+            color: var(--text-color);
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+
+        .history-score {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+
+        .download-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .download-btn .btn {
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            padding: 0.8rem 1.5rem;
+        }
+
+        /* زر تبديل الوضع الداكن/الفاتح */
+        .theme-switcher {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        #themeToggle {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+
+        #themeToggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* أنماط متجاوبة */
+        /* هواتف صغيرة - أقل من 576px */
+        @media (max-width: 575.98px) {
+            .navbar-container {
+                padding: 0.7rem 0.8rem;
+            }
+            
+            .logo {
+                font-size: 1.1rem;
+            }
+            
+            .logo i {
+                font-size: 1.3rem;
+                margin-left: 0.3rem;
+            }
+            
+            .btn {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .main-content {
+                padding: 1.5rem 0.8rem;
+            }
+            
+            .hero {
+                padding: 1.5rem 0;
+            }
+            
+            .quiz-container {
+                padding: 1rem;
+            }
+            
+            .question-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.8rem;
+            }
+            
+            .help-icon {
+                align-self: flex-end;
+            }
+            
+            .quiz-actions {
+                flex-direction: column;
+            }
+            
+            .quiz-actions .btn {
+                width: 100%;
+            }
+            
+            .result-actions {
+                flex-direction: column;
+            }
+            
+            .result-actions .btn {
+                width: 100%;
+            }
+            
+            .history-item {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* هواتف متوسطة - 576px إلى 767px */
+        @media (min-width: 576px) and (max-width: 767.98px) {
+            .navbar-container {
+                padding: 0.7rem 1rem;
+            }
+            
+            .main-content {
+                padding: 1.5rem 1rem;
+            }
+            
+            .quiz-container {
+                padding: 1.2rem;
+            }
+        }
+
+        /* أجهزة لوحية - 768px إلى 991px */
+        @media (min-width: 768px) and (max-width: 991.98px) {
+            .navbar-container {
+                padding: 0.8rem 1.5rem;
+            }
+            
+            .main-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .quiz-container {
+                padding: 1.5rem;
+            }
+        }
+
+        /* لابتوب - 992px إلى 1199px */
+        @media (min-width: 992px) and (max-width: 1199.98px) {
+            .navbar-container {
+                padding: 0.8rem 2rem;
+            }
+            
+            .main-content {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        /* شاشات كبيرة - 1200px فما فوق */
+        @media (min-width: 1200px) {
+            .navbar-container {
+                padding: 0.8rem 2rem;
+            }
+            
+            .main-content {
+                padding: 3rem 2rem;
+            }
+        }
+
+        /* إخفاء قائمة الجوال في الشاشات الكبيرة */
+        @media (min-width: 993px) {
+            .mobile-menu {
+                display: none !important;
+            }
+            
+            .hamburger {
+                display: none !important;
+            }
+        }
+
+        /* إظهار قائمة الجوال في الشاشات الصغيرة */
+        @media (max-width: 992px) {
+            .nav-buttons {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+        }
+
+        /* تحسينات للشاشات الصغيرة جدًا */
+        @media (max-width: 360px) {
+            .logo-text {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.8rem;
+            }
+            
+            .question-text {
+                font-size: 1rem;
+            }
+            
+            .option {
+                padding: 0.8rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* منع التكبير التلقائي على iOS */
+        @supports (-webkit-touch-callout: none) {
+            input, select, textarea {
+                font-size: 16px;
+            }
+        }
+
+        /* تحسين الأداء على الأجهزة المحمولة */
+        @media (hover: none) {
+            .option:hover {
+                transform: none;
+                background-color: var(--light-color);
+            }
+            
+            .btn:hover {
+                transform: none;
+            }
+            
+            .help-icon:hover {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo">
+                <i class="fas fa-book-medical"></i>
+                <span class="logo-text">موسوعة التخدير</span>
+            </a>
+            
+            <div class="nav-buttons">
+                <a href="https://t.me/Anesthesia_Mohd" target="_blank" class="btn btn-primary">
+                    <i class="fas fa-paper-plane" style="margin-left: 8px;"></i>
+                    تواصل معنا
+                </a>
+            </div>
+            
+            <button class="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <div class="mobile-menu">
+            <div class="mobile-buttons">
+                <a href="https://t.me/Anesthesia_Mohd" target="_blank" class="btn btn-primary">
+                    <i class="fas fa-paper-plane" style="margin-left: 8px;"></i>
+                    تواصل معنا
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero">
+            <h1>اختبار العناية المركزة العصبية (Neurocritical Care)</h1>
+            <p>اختبر معرفتك في العناية المركزة العصبية من خلال 50 سؤالاً شاملاً من منهاج الوزارة.</p>
+            <div class="download-btn">
+                <button id="downloadPdf" class="btn btn-outline">
+                    <i class="fas fa-download" style="margin-left: 8px;"></i>
+                    تحميل الأسئلة بصيغة PDF
+                </button>
+            </div>
+        </section>
+
+        <section class="quiz-container" id="quiz-section">
+            <!-- سيتم ملء هذا القسم ديناميكيًا بواسطة JavaScript -->
+        </section>
+
+        <section class="test-history" id="history-section">
+            <h3>سجل الاختبارات السابقة</h3>
+            <div id="history-list">
+                <!-- سيتم ملء هذا القسم ديناميكيًا بواسطة JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- زر تبديل الوضع الداكن/الفاتح -->
+    <div class="theme-switcher">
+        <button id="themeToggle" aria-label="تبديل الوضع الداكن">
+            <i class="fas fa-moon"></i>
+            <i class="fas fa-sun" style="display:none;"></i>
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // تبديل القائمة المتنقلة
+            const hamburger = document.querySelector('.hamburger');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            
+            hamburger.addEventListener('click', function() {
+                mobileMenu.classList.toggle('active');
+                
+                const icon = hamburger.querySelector('i');
+                if (mobileMenu.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+            
+            // تبديل الوضع الداكن/الفاتح
+            const themeToggle = document.getElementById('themeToggle');
+            const moonIcon = themeToggle.querySelector('.fa-moon');
+            const sunIcon = themeToggle.querySelector('.fa-sun');
+            
+            // التحقق من التفضيل المحفوظ أو تفضيل النظام
+            const savedTheme = localStorage.getItem('theme') || 
+                             (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            
+            // تطبيق الوضع المحدد
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                moonIcon.style.display = 'none';
+                sunIcon.style.display = 'block';
+            }
+            
+            // حدث النقر على زر التبديل
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                
+                if (currentTheme === 'dark') {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                    moonIcon.style.display = 'block';
+                    sunIcon.style.display = 'none';
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    moonIcon.style.display = 'none';
+                    sunIcon.style.display = 'block';
+                }
+            });
+
+            // بيانات الأسئلة من ملف PDF (50 سؤالاً)
+            const questions = [
+                {
+                    question: "What is the recommended PaO₂ target during ventilation in the immediate postoperative period following neurovascular surgery?",
+                    options: [
+                        "PaO₂ > 60 mmHg",
+                        "PaO₂ > 80 mmHg", 
+                        "PaO₂ > 100 mmHg",
+                        "PaO₂ > 120 mmHg",
+                        "All of the above"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "Maintain PaO₂ > 100 mmHg to ensure adequate cerebral oxygenation. This is part of the ventilation strategy in the immediate postoperative phase (first 24 hours) following neurovascular surgery.",
+                    pageReference: "Page 4 - Immediate Postoperative Phase (First 24 Hours)"
+                },
+                {
+                    question: "Which of the following is NOT a core principle of postoperative neurovascular care?",
+                    options: [
+                        "Brain Protection - Minimize secondary insults",
+                        "Early Detection - Recognize complications before irreversible damage",
+                        "Physiologic Optimization - Maintain cerebral homeostasis",
+                        "Aggressive Hyperventilation - Target PaCO₂ 25 mmHg",
+                        "Multidisciplinary Coordination - Seamless neurocritical care team approach"
+                    ],
+                    correctAnswer: 3,
+                    explanation: "Aggressive hyperventilation with target PaCO₂ 25 mmHg is NOT a core principle. The core principles are: Brain Protection, Early Detection, Physiologic Optimization, and Multidisciplinary Coordination. Hyperventilation is reserved for acute herniation syndromes.",
+                    pageReference: "Page 2 - Introduction and Overview"
+                },
+                {
+                    question: "What is the target systolic blood pressure after aneurysm clipping?",
+                    options: [
+                        "100-120 mmHg",
+                        "120-140 mmHg",
+                        "140-160 mmHg", 
+                        "160-180 mmHg",
+                        "180-200 mmHg"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "After aneurysm clipping, target systolic blood pressure is 120-140 mmHg. Special consideration: Avoid hypertension to prevent rebleeding.",
+                    pageReference: "Page 5 - Hemodynamic Management"
+                },
+                {
+                    question: "All of the following are indications for continued intubation EXCEPT:",
+                    options: [
+                        "Glasgow Coma Scale (GCS) ≤ 8",
+                        "Significant posterior fossa swelling",
+                        "Inadequate airway reflexes (absent gag or cough reflex)",
+                        "Anticipated neurological deterioration",
+                        "Glasgow Coma Scale (GCS) = 15"
+                    ],
+                    correctAnswer: 4,
+                    explanation: "GCS = 15 is NOT an indication for continued intubation. Indications include: GCS ≤ 8, significant posterior fossa swelling, inadequate airway reflexes, anticipated neurological deterioration, and need for controlled hyperventilation.",
+                    pageReference: "Page 3 - Immediate Postoperative Phase"
+                },
+                {
+                    question: "What is the recommended PEEP limit to avoid impaired cerebral venous return?",
+                    options: [
+                        "≤ 5 cm H₂O",
+                        "≤ 10 cm H₂O",
+                        "≤ 15 cm H₂O",
+                        "≤ 20 cm H₂O",
+                        "All of the above"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "Use PEEP ≤ 10 cm H₂O to avoid impaired cerebral venous return. Higher PEEP may worsen venous return through the jugular veins, potentially causing cerebral venous congestion.",
+                    pageReference: "Page 4 - Ventilation Strategy"
+                },
+                {
+                    question: "Which vasopressor is preferred for cerebral vasospasm management?",
+                    options: [
+                        "Dopamine",
+                        "Dobutamine",
+                        "Phenylephrine",
+                        "Epinephrine",
+                        "Isoproterenol"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "Phenylephrine (pure α₁-adrenergic agonist) is preferred for cerebral vasospasm. Starting dose: 10-20 μg/minute intravenous, titrated to effect (range 10-200 μg/minute).",
+                    pageReference: "Page 8 - Pressor Support for Hypotension or Vasospasm Therapy"
+                },
+                {
+                    question: "What is the target mean arterial pressure for cerebral vasospasm?",
+                    options: [
+                        "70-80 mmHg",
+                        "80-90 mmHg",
+                        "90-110 mmHg",
+                        "110-120 mmHg",
+                        "120-130 mmHg"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "For cerebral vasospasm, target mean arterial pressure is 90-110 mmHg with systolic blood pressure 160-200 mmHg. Induced hypertension is used to improve collateral flow.",
+                    pageReference: "Page 6 - Cerebral Vasospasm"
+                },
+                {
+                    question: "Which of the following agents should be AVOIDED in post-aneurysm clipping patients due to potential ICP increase?",
+                    options: [
+                        "Labetalol",
+                        "Nicardipine",
+                        "Sodium nitroprusside",
+                        "Esmolol",
+                        "Metoprolol"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "Sodium nitroprusside should be avoided post-aneurysm clipping because it may increase intracranial pressure via cerebral vasodilation. Preferred agents include labetalol and nicardipine.",
+                    pageReference: "Page 10 - Clinical Considerations for Agent Selection"
+                },
+                {
+                    question: "What is the first step in the Intracranial Pressure Management Algorithm for ICP > 20-25 mmHg?",
+                    options: [
+                        "Osmotherapy with mannitol",
+                        "CSF drainage",
+                        "Head elevation to 30°, maintain midline head position",
+                        "Moderate hyperventilation",
+                        "Barbiturate coma"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "Step 1: Head elevation to 30°, maintain midline head position. This is followed by Step 2: Ensure adequate sedation and analgesia, then Step 3: Osmotherapy.",
+                    pageReference: "Page 14 - Intracranial Pressure Management Algorithm"
+                },
+                {
+                    question: "All of the following are components of Triple-H Therapy for cerebral vasospasm EXCEPT:",
+                    options: [
+                        "Hypervolemia",
+                        "Hypertension",
+                        "Hemodilution",
+                        "Hypothermia",
+                        "All are components"
+                    ],
+                    correctAnswer: 3,
+                    explanation: "Triple-H Therapy consists of Hypervolemia, Hypertension, and Hemodilution. Hypothermia is not a component of Triple-H Therapy for vasospasm management.",
+                    pageReference: "Page 17 - Medical Management of cerebral vasospasm - Triple-H Therapy"
+                },
+                {
+                    question: "What is the target hematocrit in hemodilution for vasospasm management?",
+                    options: [
+                        "25-28%",
+                        "27-30%",
+                        "30-33%",
+                        "33-36%",
+                        "36-39%"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "Target hematocrit is 30-33%. Avoid transfusion unless hematocrit <27%. This is the hemodilution component of Triple-H Therapy.",
+                    pageReference: "Page 17 - Triple-H Therapy"
+                },
+                {
+                    question: "Which antiepileptic agent is preferred due to fewer drug interactions?",
+                    options: [
+                        "Phenytoin",
+                        "Levetiracetam",
+                        "Valproic acid",
+                        "Carbamazepine",
+                        "Phenobarbital"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "Levetiracetam 500-1000 mg intravenous every 12 hours is preferred due to fewer drug interactions. Phenytoin requires serum level monitoring.",
+                    pageReference: "Page 19 - Antiepileptic Agents"
+                },
+                {
+                    question: "What is the indication for continuous EEG monitoring?",
+                    options: [
+                        "Unexplained depressed consciousness",
+                        "Paroxysmal sympathetic storms",
+                        "Subtle facial or limb twitching",
+                        "All of the above",
+                        "None of the above"
+                    ],
+                    correctAnswer: 3,
+                    explanation: "Continuous electroencephalography is indicated for: Unexplained depressed consciousness, Paroxysmal sympathetic storms, and Subtle facial or limb twitching.",
+                    pageReference: "Page 19 - Monitoring Indications"
+                },
+                {
+                    question: "Which ECG finding is associated with neurocardiac syndrome?",
+                    options: [
+                        "QT interval prolongation",
+                        "ST segment elevation",
+                        "T wave abnormalities",
+                        "U waves",
+                        "All of the above"
+                    ],
+                    correctAnswer: 4,
+                    explanation: "ECG findings in neurocardiac syndrome include: QT interval prolongation, ST segment and T wave abnormalities, and U waves (suggestive of hypokalemia).",
+                    pageReference: "Page 20 - Neurocardiac Syndrome"
+                },
+                {
+                    question: "What is the recommended timing for tracheostomy consideration in patients with GCS ≤8?",
+                    options: [
+                        "Days 1-3",
+                        "Days 4-6",
+                        "Days 7-10",
+                        "Days 11-14",
+                        "Days 15-21"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "Consider tracheostomy between days 7-10 if Glasgow Coma Scale ≤8 and poor cough or gag reflex present. This reduces sedation requirements and facilitates ventilator weaning.",
+                    pageReference: "Page 22 - Tracheostomy Consideration"
+                },
+                {
+                    question: "When should pharmacologic thromboembolism prophylaxis be initiated postoperatively?",
+                    options: [
+                        "Immediately (0-6 hours)",
+                        "6-12 hours post-op",
+                        "12-24 hours post-op",
+                        "24-48 hours post-op if no active bleeding",
+                        "After 72 hours only"
+                    ],
+                    correctAnswer: 3,
+                    explanation: "Phase 2 (24-48 hours): Add thromboembolism prophylaxis if no active bleeding, stable postoperative imaging, and platelet count >100,000/μL. Options include Enoxaparin 40 mg SC daily or Heparin 5000 units SC q8-12h.",
+                    pageReference: "Page 23 - Thromboembolic Prophylaxis"
+                },
+                {
+                    question: "What is the dose of nimodipine for vasospasm prevention after aneurysmal SAH?",
+                    options: [
+                        "30 mg every 6 hours",
+                        "60 mg every 4 hours",
+                        "60 mg every 6 hours",
+                        "90 mg every 4 hours",
+                        "30 mg every 8 hours"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "Nimodipine 60 mg every 4 hours orally or via nasogastric tube is used for vasospasm prevention after aneurysmal SAH.",
+                    pageReference: "Page 24 - Post-Craniotomy for Aneurysm"
+                },
+                {
+                    question: "Which of the following is NOT a component of the Brain Protection Bundle?",
+                    options: [
+                        "Normothermia (36-37.5°C)",
+                        "Normoglycemia",
+                        "Normotension",
+                        "Normoxia",
+                        "Hyperthermia (38-39°C)"
+                    ],
+                    correctAnswer: 4,
+                    explanation: "The Brain Protection Bundle includes: Normothermia (36-37.5°C), Normoglycemia, Normotension, and Normoxia. Hyperthermia is harmful and should be avoided.",
+                    pageReference: "Page 28 - Brain Protection Bundle"
+                },
+                {
+                    question: "What is the target CVP for hypervolemia in Triple-H Therapy?",
+                    options: [
+                        "4-6 mmHg",
+                        "6-8 mmHg",
+                        "8-12 mmHg",
+                        "12-16 mmHg",
+                        "16-20 mmHg"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "Target central venous pressure: 8-12 mmHg (or pulmonary artery wedge pressure: 12-15 mmHg). Normal saline infusion at 1.5-2 mL/kg/hour is used.",
+                    pageReference: "Page 17 - Triple-H Therapy"
+                },
+                {
+                    question: "All of the following are VAP prevention measures EXCEPT:",
+                    options: [
+                        "Head of bed elevation ≥30°",
+                        "Oral care every 4 hours with chlorhexidine",
+                        "Daily sedation holidays",
+                        "Peptic ulcer prophylaxis",
+                        "Supine positioning with head flat"
+                    ],
+                    correctAnswer: 4,
+                    explanation: "VAP prevention bundle includes: Head of bed elevation ≥30°, oral care every 4 hours with chlorhexidine, daily sedation holidays, and peptic ulcer prophylaxis. Supine positioning increases VAP risk.",
+                    pageReference: "Page 21 - Pulmonary Complications Prevention Bundle"
+                },
+                {
+                    question: "What is the target PaCO₂ for controlled hyperventilation in acute herniation?",
+                    options: [
+                        "25-30 mmHg",
+                        "30-35 mmHg",
+                        "35-40 mmHg",
+                        "40-45 mmHg",
+                        "45-50 mmHg"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "Reserve hyperventilation for acute herniation syndromes with target PaCO₂ 30-35 mmHg. Normal ventilation target is normocapnia (PaCO₂ 35-40 mmHg).",
+                    pageReference: "Page 4 - Special Considerations"
+                },
+                {
+                    question: "Which vasopressor has dose-dependent receptor activity (dopaminergic, β₁, α₁)?",
+                    options: [
+                        "Phenylephrine",
+                        "Norepinephrine",
+                        "Dopamine",
+                        "Epinephrine",
+                        "Vasopressin"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "Dopamine has dose-dependent receptor activity: Renal dose: 1-3 μg/kg/min (dopaminergic), Inotropic dose: 3-10 μg/kg/min (β₁), Pressor dose: 10-20 μg/kg/min (α₁).",
+                    pageReference: "Page 9 - Dopamine"
+                },
+                {
+                    question: "What is the maximum duration recommended for sodium nitroprusside infusion?",
+                    options: [
+                        "6-12 hours",
+                        "12-24 hours",
+                        "24-48 hours",
+                        "48-72 hours",
+                        "72-96 hours"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "Sodium nitroprusside use is limited to 24-48 hours maximum due to cyanide toxicity risk. It may also increase ICP via cerebral vasodilation.",
+                    pageReference: "Page 8 - For Refractory Hypertension"
+                },
+                {
+                    question: "Which of the following is a Tier 2 monitoring modality?",
+                    options: [
+                        "Hourly neurological checks",
+                        "Non-invasive blood pressure",
+                        "Cardiac telemetry",
+                        "Invasive arterial blood pressure",
+                        "Continuous EEG"
+                    ],
+                    correctAnswer: 3,
+                    explanation: "Tier 2 (High-Risk Patients) includes: Invasive arterial blood pressure monitoring, Intracranial pressure monitoring, and Central venous access. Tier 1 includes hourly neuro checks and non-invasive BP.",
+                    pageReference: "Page 12 - Tiered Monitoring Protocol"
+                },
+                {
+                    question: "What is the target brain tissue oxygenation in multimodal monitoring?",
+                    options: [
+                        ">10 mmHg",
+                        ">15 mmHg",
+                        ">20 mmHg",
+                        ">25 mmHg",
+                        ">30 mmHg"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "Brain tissue oxygenation target is >20 mmHg. This is part of Tier 3 multimodal monitoring for complex cases, along with cerebral microdialysis and continuous EEG.",
+                    pageReference: "Page 12 - Tier 3 Monitoring"
+                },
+                {
+                    question: "All of the following are indications for ICP monitoring EXCEPT:",
+                    options: [
+                        "GCS ≤ 8",
+                        "CT shows significant swelling",
+                        "Post-resection of small meningioma with GCS 15",
+                        "Severe traumatic brain injury",
+                        "Massive stroke with edema"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "ICP monitoring is indicated for high-risk patients including GCS ≤8 or CT showing significant swelling. Small meningioma resection with GCS 15 does not typically require ICP monitoring.",
+                    pageReference: "Page 12 - Tier 2 Monitoring"
+                },
+                {
+                    question: "What is the third step in ICP management algorithm after sedation?",
+                    options: [
+                        "CSF drainage",
+                        "Hyperventilation",
+                        "Osmotherapy",
+                        "Barbiturate coma",
+                        "Positioning"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "Step 3 is Osmotherapy: Mannitol 0.25-1 g/kg IV bolus OR Hypertonic saline (3%) 250 mL IV bolus. Step 1: Positioning, Step 2: Sedation/Analgesia.",
+                    pageReference: "Page 14 - ICP Management Algorithm"
+                },
+                {
+                    question: "Which TCD finding indicates severe vasospasm?",
+                    options: [
+                        "Mean flow velocity >120 cm/s",
+                        "Mean flow velocity >150 cm/s",
+                        "Mean flow velocity >180 cm/s",
+                        "Mean flow velocity >200 cm/s",
+                        "Mean flow velocity >220 cm/s"
+                    ],
+                    correctAnswer: 3,
+                    explanation: "Daily transcranial Doppler ultrasonography: mean flow velocity >200 cm/s indicates severe vasospasm. Early intervention considered if two or more vessels with mean flow velocity >180 cm/s.",
+                    pageReference: "Page 16 - Proactive Surveillance Protocol"
+                },
+                {
+                    question: "Which of the following is NOT a contraindication for thromboembolism prophylaxis?",
+                    options: [
+                        "Active bleeding",
+                        "Unstable postoperative imaging",
+                        "Platelet count <100,000/μL",
+                        "Stable postoperative imaging",
+                        "All are contraindications"
+                    ],
+                    correctAnswer: 3,
+                    explanation: "Thromboembolism prophylaxis can be added when: no active bleeding, stable postoperative imaging, and platelet count >100,000/μL. Stable imaging is an indication, not contraindication.",
+                    pageReference: "Page 23 - Phase 2"
+                },
+                {
+                    question: "What is the management for neurogenic pulmonary edema?",
+                    options: [
+                        "Low PEEP and low tidal volume",
+                        "High PEEP (8-12 cm H₂O) and lung-protective ventilation",
+                        "Aggressive fluid resuscitation",
+                        "Avoid diuretics",
+                        "Permissive hypercapnia"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "Neurogenic pulmonary edema management includes: High PEEP (8-12 cm H₂O), diuretics if hypervolemic, and lung-protective ventilation (tidal volume 6-8 mL/kg).",
+                    pageReference: "Page 21 - Neurogenic Pulmonary Edema Management"
+                },
+                {
+                    question: "Which medication requires serum level monitoring?",
+                    options: [
+                        "Levetiracetam",
+                        "Phenytoin",
+                        "Labetalol",
+                        "Nicardipine",
+                        "Esmolol"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "Phenytoin requires serum level monitoring. Loading dose is 20 mg/kg followed by maintenance 5 mg/kg/day. Levetiracetam does not require routine level monitoring.",
+                    pageReference: "Page 19 - Antiepileptic Agents"
+                },
+                {
+                    question: "All of the following are true about post-coiling/stenting protocol EXCEPT:",
+                    options: [
+                        "Check groin site every 15 minutes for 1 hour",
+                        "Clopidogrel 75 mg daily if stent placed",
+                        "Aspirin 81-325 mg daily",
+                        "Monitor for contrast-induced nephropathy",
+                        "Discontinue antiplatelets immediately post-procedure"
+                    ],
+                    correctAnswer: 4,
+                    explanation: "Antiplatelet therapy is continued post-procedure: Clopidogrel 75 mg daily (if stent placed) and Aspirin 81-325 mg daily. It should not be discontinued immediately.",
+                    pageReference: "Page 25 - Post-Interventional Neuroradiology Procedures"
+                },
+                {
+                    question: "What is the tolerance for ICP in decompressive hemicraniectomy patients?",
+                    options: [
+                        "Up to 15 mmHg",
+                        "Up to 20 mmHg",
+                        "Up to 25 mmHg",
+                        "Up to 30 mmHg",
+                        "Up to 35 mmHg"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "Decompressive hemicraniectomy patients may tolerate higher intracranial pressures (up to 25 mmHg). Parenchymal ICP monitor is preferred.",
+                    pageReference: "Page 26 - Decompressive Hemicraniectomy Patients"
+                },
+                {
+                    question: "Which component is NOT part of hourly neuro checks?",
+                    options: [
+                        "Alertness and breathing pattern",
+                        "Cranial nerves and drift",
+                        "Extremities and fluids",
+                        "Glucose and head incision",
+                        "Echocardiography findings"
+                    ],
+                    correctAnswer: 4,
+                    explanation: "Hourly neuro checks include: Alertness, breathing pattern, cranial nerves, drift, extremities, fluids, glucose, and head assessment. Echocardiography is not an hourly check.",
+                    pageReference: "Page 27 - Comprehensive Neurological Assessment"
+                },
+                {
+                    question: "What is the glucose target in neurocritical care?",
+                    options: [
+                        "60-140 mg/dL",
+                        "70-160 mg/dL",
+                        "80-180 mg/dL",
+                        "90-200 mg/dL",
+                        "100-220 mg/dL"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "Maintain glucose 80-180 mg/dL. This is part of the comprehensive neurological assessment and Brain Protection Bundle.",
+                    pageReference: "Page 27 - Comprehensive Neurological Assessment"
+                },
+                {
+                    question: "Which of the following is a delayed complication (Days 3-21) after aneurysm?",
+                    options: [
+                        "Rebleeding",
+                        "Vasospasm",
+                        "Seizures in first 24 hours",
+                        "Intraoperative rupture",
+                        "Anesthetic complications"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "Delayed complications (Days 3-21) include: Vasospasm (requires daily TCD and aggressive triple-H therapy), Hydrocephalus (approximately 20% may require shunt), and Hyponatremia (differentiate SIADH vs CSW).",
+                    pageReference: "Page 25 - Delayed Complications"
+                },
+                {
+                    question: "All of the following are ICU discharge criteria EXCEPT:",
+                    options: [
+                        "Neurologically stable for ≥24 hours",
+                        "ICP normal without therapy for ≥24 hours",
+                        "On vasopressor support",
+                        "Airway protective reflexes intact",
+                        "No active intracranial complication on imaging"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "ICU discharge criteria include: Neurologically stable for ≥24 hours, ICP normal without therapy for ≥24 hours, NO vasopressor requirements, airway protective reflexes intact, seizure-free, and no active complication.",
+                    pageReference: "Page 29 - Intensive Care Unit Discharge Criteria"
+                },
+                {
+                    question: "What happens to CBF during hypercapnia?",
+                    options: [
+                        "Cerebral vasoconstriction",
+                        "Cerebral vasodilation",
+                        "No change in CBF",
+                        "Decreased cerebral blood volume",
+                        "Increased ICP only"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "PaCO2 levels inversely change CBF: if the patient becomes hypercapnic, a vasodilatory input will be delivered to cerebral vessels, while in case of hypocapnia there will be cerebral vasoconstriction.",
+                    pageReference: "Page 30 - Neurosurgery"
+                },
+                {
+                    question: "At what PaO₂ level does hypoxemia trigger cerebral vasodilation?",
+                    options: [
+                        "PaO₂ < 40 mmHg",
+                        "PaO₂ < 50 mmHg",
+                        "PaO₂ < 60 mmHg",
+                        "PaO₂ < 70 mmHg",
+                        "PaO₂ < 80 mmHg"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "Hypoxemia and respiratory failure are strong triggers for cerebral vasodilation, especially when the PaO2 is below 60 mmHg.",
+                    pageReference: "Page 31 - Current Evidence"
+                },
+                {
+                    question: "Which statement is TRUE about PEEP in neurocritical patients?",
+                    options: [
+                        "PEEP >15 cmH₂O always decreases CPP",
+                        "Higher PEEP does not seem to affect CPP if fixed as high as 15 cmH₂O",
+                        "PEEP should always be avoided",
+                        "PEEP increases CBF directly",
+                        "PEEP has no effect on cerebral hemodynamics"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "In neurocritical patients, a higher PEEP does not seem to affect CPP if fixed as high as 15 cmH₂O. However, an increased PEEP may worsen venous return through jugular veins, potentially causing cerebral venous congestion.",
+                    pageReference: "Page 31 - Current Evidence"
+                },
+                {
+                    question: "What did Nemer et al. study show about recruitment maneuvers?",
+                    options: [
+                        "Stepwise RM lowered CPP in a safe and reversible way",
+                        "Recruitment maneuvers should never be used",
+                        "CPAP at 35 cmH₂O is always safe",
+                        "RM decreases ICP in all patients",
+                        "RM has no effect on cerebral hemodynamics"
+                    ],
+                    correctAnswer: 0,
+                    explanation: "A study by Nemer et al. showed that a stepwise RM lowered CPP in a safe and reversible way compared to the classical CPAP RM, besides improving oxygenation in patients with subarachnoid hemorrhage.",
+                    pageReference: "Page 32 - Current Evidence"
+                },
+                {
+                    question: "What is the loading dose for phenytoin?",
+                    options: [
+                        "10 mg/kg",
+                        "15 mg/kg",
+                        "20 mg/kg",
+                        "25 mg/kg",
+                        "30 mg/kg"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "Phenytoin loading dose is 20 mg/kg followed by maintenance 5 mg/kg/day. It requires serum level monitoring.",
+                    pageReference: "Page 19 - Antiepileptic Agents"
+                },
+                {
+                    question: "All of the following are used for refractory hypertension EXCEPT:",
+                    options: [
+                        "Sodium nitroprusside",
+                        "Nicardipine infusion",
+                        "Labetalol boluses",
+                        "Phenylephrine infusion",
+                        "Enalaprilat"
+                    ],
+                    correctAnswer: 3,
+                    explanation: "Phenylephrine is a vasopressor used for hypotension or vasospasm, not for hypertension. Refractory hypertension agents include sodium nitroprusside, nicardipine, labetalol, and enalaprilat.",
+                    pageReference: "Page 8-9 - Pharmacologic Management"
+                },
+                {
+                    question: "What is the starting dose for norepinephrine infusion?",
+                    options: [
+                        "0.01 μg/kg/min",
+                        "0.05 μg/kg/min",
+                        "0.1 μg/kg/min",
+                        "0.5 μg/kg/min",
+                        "1 μg/kg/min"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "Norepinephrine starting dose: 0.05 μg/kg/minute intravenous (typically 2-4 μg/minute). Titration range: 0.05-1 μg/kg/minute.",
+                    pageReference: "Page 8 - Pressor Support"
+                },
+                {
+                    question: "Which agent is preferred in patients with concurrent myocardial ischemia?",
+                    options: [
+                        "Hydralazine",
+                        "Esmolol",
+                        "Nitroprusside",
+                        "Diazoxide",
+                        "Minoxidil"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "For concurrent myocardial ischemia, preferred agents include esmolol, labetalol, and nitrates. Avoid hydralazine due to risk of reflex tachycardia.",
+                    pageReference: "Page 10 - Clinical Considerations"
+                },
+                {
+                    question: "What is the target SBP after AVM resection?",
+                    options: [
+                        "100-120 mmHg",
+                        "110-130 mmHg",
+                        "120-140 mmHg",
+                        "130-150 mmHg",
+                        "140-160 mmHg"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "After Arteriovenous Malformation Resection: Systolic blood pressure: 110-130 mmHg, Mean arterial pressure: 65-85 mmHg. Special consideration: Prevent normal perfusion pressure breakthrough.",
+                    pageReference: "Page 5 - After Arteriovenous Malformation Resection"
+                },
+                {
+                    question: "All of the following are true about endovascular rescue therapy for vasospasm EXCEPT:",
+                    options: [
+                        "Balloon angioplasty for proximal vessel vasospasm",
+                        "Intra-arterial verapamil for distal vasospasm",
+                        "Intra-arterial milrinone for distal vasospasm",
+                        "Early intervention if two or more vessels with MFV >180 cm/s",
+                        "Balloon angioplasty is preferred for distal vessel vasospasm"
+                    ],
+                    correctAnswer: 4,
+                    explanation: "Balloon angioplasty is for proximal vessel vasospasm. Intra-arterial verapamil or milrinone is for distal vasospasm. Early intervention considered if two or more vessels with MFV >180 cm/s.",
+                    pageReference: "Page 18 - Endovascular Rescue Therapy"
+                },
+                {
+                    question: "Which electrolyte abnormality requires differentiation between SIADH and CSW?",
+                    options: [
+                        "Hypernatremia",
+                        "Hyponatremia",
+                        "Hyperkalemia",
+                        "Hypokalemia",
+                        "Hypercalcemia"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "Hyponatremia requires differentiation between syndrome of inappropriate antidiuretic hormone secretion (SIADH) and cerebral salt wasting (CSW). This is a delayed complication after aneurysm.",
+                    pageReference: "Page 25 - Delayed Complications"
+                },
+                {
+                    question: "What is the recommended tidal volume for lung-protective ventilation in neurogenic pulmonary edema?",
+                    options: [
+                        "4-5 mL/kg",
+                        "6-8 mL/kg",
+                        "8-10 mL/kg",
+                        "10-12 mL/kg",
+                        "12-15 mL/kg"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "Lung-protective ventilation with tidal volume 6-8 mL/kg is recommended for neurogenic pulmonary edema management, along with high PEEP (8-12 cm H₂O).",
+                    pageReference: "Page 21 - Neurogenic Pulmonary Edema Management"
+                },
+                {
+                    question: "Which medication is used for tachycardia in neurocardiac syndrome?",
+                    options: [
+                        "Atropine",
+                        "β-blockers (metoprolol)",
+                        "Epinephrine",
+                        "Dobutamine",
+                        "Isoproterenol"
+                    ],
+                    correctAnswer: 1,
+                    explanation: "Management of neurocardiac syndrome includes: β-blockers (metoprolol) for tachycardia, avoid excessive fluid if stunned myocardium present, and inotropes (dobutamine) if cardiogenic shock develops.",
+                    pageReference: "Page 21 - Management of neurocardiac syndrome"
+                },
+                {
+                    question: "What is the recommended dose for hypertonic saline (3%) as osmotherapy?",
+                    options: [
+                        "100 mL IV bolus",
+                        "150 mL IV bolus",
+                        "200 mL IV bolus",
+                        "250 mL IV bolus",
+                        "300 mL IV bolus"
+                    ],
+                    correctAnswer: 3,
+                    explanation: "Hypertonic saline (3%) 250 mL intravenous bolus is used as osmotherapy in Step 3 of ICP management, along with Mannitol 0.25-1 g/kg IV bolus.",
+                    pageReference: "Page 14 - ICP Management Algorithm"
+                },
+                {
+                    question: "All of the following are components of the Sedation Management Bundle EXCEPT:",
+                    options: [
+                        "Daily sedation vacation",
+                        "Pain assessment every 2 hours",
+                        "Delirium screening using CAM-ICU",
+                        "Continuous sedation without interruption",
+                        "All are components"
+                    ],
+                    correctAnswer: 3,
+                    explanation: "Sedation Management Bundle includes: Daily sedation vacation, Pain assessment every 2 hours, and Delirium screening using CAM-ICU. Continuous sedation without interruption is not recommended.",
+                    pageReference: "Page 28 - Sedation Management Bundle"
+                },
+                {
+                    question: "What is the final step (Step 6) in the ICP Management Algorithm?",
+                    options: [
+                        "CSF drainage",
+                        "Hyperventilation",
+                        "Barbiturate coma (pentobarbital)",
+                        "Osmotherapy",
+                        "Decompressive craniectomy"
+                    ],
+                    correctAnswer: 2,
+                    explanation: "Step 6: Barbiturate coma (pentobarbital) for refractory cases. This is after Step 1: Positioning, Step 2: Sedation, Step 3: Osmotherapy, Step 4: CSF drainage, and Step 5: Hyperventilation.",
+                    pageReference: "Page 14 - ICP Management Algorithm"
+                }
+            ];
+
+            // متغيرات حالة الاختبار
+            let currentQuestionIndex = 0;
+            let userAnswers = Array(questions.length).fill(null);
+            let answeredQuestions = Array(questions.length).fill(false);
+            
+            // مفتاح التمييز للاختبارات الجديدة
+            const NEW_TEST_KEY = 'neurocritical_care_50_questions';
+            let testHistory = JSON.parse(localStorage.getItem('testHistory')) || [];
+            let testInProgress = localStorage.getItem('testInProgress') === 'true';
+            let currentTestStartTime = localStorage.getItem('currentTestStartTime');
+
+            // تصفية الاختبارات القديمة والاحتفاظ بالجديدة فقط
+            function filterNewTests() {
+                return testHistory.filter(test => test.testKey === NEW_TEST_KEY);
+            }
+
+            // تهيئة الاختبار
+            function initQuiz() {
+                // إذا كان هناك اختبار قيد التقدم، استعادة الحالة
+                if (testInProgress && currentTestStartTime) {
+                    const savedAnswers = localStorage.getItem('userAnswers');
+                    if (savedAnswers) {
+                        userAnswers = JSON.parse(savedAnswers);
+                    }
+                    
+                    const savedAnswered = localStorage.getItem('answeredQuestions');
+                    if (savedAnswered) {
+                        answeredQuestions = JSON.parse(savedAnswered);
+                    }
+                    
+                    const savedIndex = localStorage.getItem('currentQuestionIndex');
+                    if (savedIndex) {
+                        currentQuestionIndex = parseInt(savedIndex);
+                    }
+                    
+                    showQuestion();
+                } else {
+                    // بدء اختبار جديد
+                    startNewTest();
+                }
+                
+                // عرض سجل الاختبارات الجديدة فقط
+                displayTestHistory();
+            }
+
+            // بدء اختبار جديد
+            function startNewTest() {
+                currentQuestionIndex = 0;
+                userAnswers = Array(questions.length).fill(null);
+                answeredQuestions = Array(questions.length).fill(false);
+                testInProgress = true;
+                currentTestStartTime = new Date().toISOString();
+                
+                // حفظ حالة الاختبار
+                localStorage.setItem('testInProgress', 'true');
+                localStorage.setItem('currentTestStartTime', currentTestStartTime);
+                localStorage.setItem('userAnswers', JSON.stringify(userAnswers));
+                localStorage.setItem('answeredQuestions', JSON.stringify(answeredQuestions));
+                localStorage.setItem('currentQuestionIndex', currentQuestionIndex.toString());
+                
+                showQuestion();
+            }
+
+            // عرض السؤال الحالي
+            function showQuestion() {
+                const quizSection = document.getElementById('quiz-section');
+                const question = questions[currentQuestionIndex];
+                
+                // إنشاء تقدم الاختبار
+                const answeredCount = answeredQuestions.filter(v => v === true).length;
+                const progressPercentage = (answeredCount / questions.length) * 100;
+                
+                quizSection.innerHTML = `
+                    <div class="quiz-header">
+                        <div class="question-number">سؤال ${currentQuestionIndex + 1} من ${questions.length}</div>
+                        <div class="quiz-timer" id="quiz-timer">الوقت: 00:00</div>
+                    </div>
+                    <div class="quiz-progress">
+                        <div class="quiz-progress-bar" style="width: ${progressPercentage}%"></div>
+                    </div>
+                    <div class="question-container">
+                        <div class="question-header">
+                            <div class="question-text">${question.question}</div>
+                            <div class="help-icon" title="اضغط للشرح">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                        </div>
+                        <div class="explanation" id="explanation">
+                            ${question.explanation}
+                            <div class="page-reference">${question.pageReference}</div>
+                        </div>
+                        <div class="options-container" id="options-container">
+                            ${question.options.map((option, index) => `
+                                <div class="option ${answeredQuestions[currentQuestionIndex] ? (userAnswers[currentQuestionIndex] === index ? (index === question.correctAnswer ? 'correct' : 'incorrect') : '') : ''} ${answeredQuestions[currentQuestionIndex] ? 'disabled' : ''}" data-index="${index}">
+                                    ${String.fromCharCode(65 + index)}) ${option}
+                                </div>
+                            `).join('')}
+                        </div>
+                        ${answeredQuestions[currentQuestionIndex] ? `
+                            <div class="feedback-message ${userAnswers[currentQuestionIndex] === question.correctAnswer ? 'feedback-correct' : 'feedback-incorrect'}">
+                                ${userAnswers[currentQuestionIndex] === question.correctAnswer ? 
+                                    '✓ إجابة صحيحة! سيتم الانتقال إلى السؤال التالي...' : 
+                                    '✗ إجابة خاطئة. الإجابة الصحيحة هي: ' + String.fromCharCode(65 + question.correctAnswer) + ') ' + question.options[question.correctAnswer]}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+                
+                // إضافة حدث النقر لأيقونة الشرح
+                document.querySelector('.help-icon').addEventListener('click', function() {
+                    const explanation = document.getElementById('explanation');
+                    explanation.classList.toggle('show');
+                });
+                
+                // إضافة أحداث النقر للخيارات فقط إذا لم يتم الإجابة بعد
+                if (!answeredQuestions[currentQuestionIndex]) {
+                    document.querySelectorAll('.option').forEach(option => {
+                        option.addEventListener('click', function() {
+                            const selectedIndex = parseInt(this.getAttribute('data-index'));
+                            handleAnswer(selectedIndex);
+                        });
+                    });
+                }
+                
+                // بدء المؤقت
+                startTimer();
+            }
+
+            // معالجة الإجابة
+            function handleAnswer(selectedIndex) {
+                const question = questions[currentQuestionIndex];
+                const isCorrect = selectedIndex === question.correctAnswer;
+                
+                // حفظ الإجابة
+                userAnswers[currentQuestionIndex] = selectedIndex;
+                answeredQuestions[currentQuestionIndex] = true;
+                
+                // تحديث localStorage
+                localStorage.setItem('userAnswers', JSON.stringify(userAnswers));
+                localStorage.setItem('answeredQuestions', JSON.stringify(answeredQuestions));
+                
+                // تحديث عرض السؤال مع الإجابة
+                showQuestion();
+                
+                // التحقق مما إذا كان هذا هو السؤال الأخير
+                const answeredCount = answeredQuestions.filter(v => v === true).length;
+                if (answeredCount === questions.length) {
+                    // تأخير الانتقال إلى النتائج لعرض رسالة الإجابة
+                    setTimeout(() => {
+                        finishTest();
+                    }, 2000);
+                } else {
+                    // الانتقال إلى السؤال التالي تلقائياً بعد ثانيتين
+                    setTimeout(() => {
+                        // العثور على السؤال التالي غير المجاب عليه
+                        let nextIndex = currentQuestionIndex + 1;
+                        while (nextIndex < questions.length && answeredQuestions[nextIndex]) {
+                            nextIndex++;
+                        }
+                        
+                        if (nextIndex < questions.length) {
+                            currentQuestionIndex = nextIndex;
+                            localStorage.setItem('currentQuestionIndex', currentQuestionIndex.toString());
+                            showQuestion();
+                        } else {
+                            // إذا لم يتم العثور على سؤال تالي غير مجاب عليه، عرض النتائج
+                            finishTest();
+                        }
+                    }, 2000);
+                }
+            }
+
+            // إنهاء الاختبار وعرض النتائج
+            function finishTest() {
+                testInProgress = false;
+                localStorage.setItem('testInProgress', 'false');
+                
+                // حساب النتيجة
+                let score = 0;
+                questions.forEach((question, index) => {
+                    if (userAnswers[index] === question.correctAnswer) {
+                        score++;
+                    }
+                });
+                
+                const percentage = (score / questions.length) * 100;
+                
+                // حفظ النتيجة في السجل مع مفتاح التمييز
+                const testResult = {
+                    date: new Date().toLocaleDateString('en-US'),
+                    score: score,
+                    total: questions.length,
+                    percentage: percentage.toFixed(1),
+                    testKey: NEW_TEST_KEY // إضافة مفتاح التمييز للاختبارات الجديدة
+                };
+                
+                testHistory.unshift(testResult);
+                localStorage.setItem('testHistory', JSON.stringify(testHistory));
+                
+                // عرض النتائج
+                showResults(score, percentage);
+            }
+
+            // عرض نتائج الاختبار
+            function showResults(score, percentage) {
+                const quizSection = document.getElementById('quiz-section');
+                
+                let message = "";
+                if (percentage >= 90) {
+                    message = "ممتاز! أداء رائع في العناية المركزة العصبية.";
+                } else if (percentage >= 80) {
+                    message = "جيد جداً! معرفة قوية بمبادئ العناية المركزة العصبية.";
+                } else if (percentage >= 70) {
+                    message = "جيد! تحتاج لمراجعة بعض المفاهيم.";
+                } else if (percentage >= 60) {
+                    message = "مقبول! يوصى بمراجعة المواد الدراسية.";
+                } else {
+                    message = "ضعيف! يجب عليك مراجعة العناية المركزة العصبية بشكل مكثف.";
+                }
+                
+                // إنشاء عرض تفصيلي للنتائج
+                let detailedResults = '';
+                questions.forEach((question, index) => {
+                    const userAnswer = userAnswers[index];
+                    const isCorrect = userAnswer === question.correctAnswer;
+                    const userAnswerText = userAnswer !== null ? question.options[userAnswer] : "لم يتم الإجابة";
+                    const correctAnswerText = question.options[question.correctAnswer];
+                    
+                    detailedResults += `
+                        <div class="question-review ${isCorrect ? 'correct' : 'incorrect'}">
+                            <div class="review-question">${index + 1}. ${question.question}</div>
+                            <div class="review-answer user-answer">
+                                <span class="answer-status ${isCorrect ? 'correct' : 'incorrect'}">${isCorrect ? '✓' : '✗'}</span>
+                                <strong>إجابتك:</strong> ${userAnswerText}
+                            </div>
+                            ${!isCorrect ? `
+                                <div class="review-answer correct-answer">
+                                    <span class="answer-status correct">✓</span>
+                                    <strong>الإجابة الصحيحة:</strong> ${correctAnswerText}
+                                </div>
+                            ` : ''}
+                            <div class="page-reference">${question.pageReference}</div>
+                        </div>
+                    `;
+                });
+                
+                quizSection.innerHTML = `
+                    <div class="result-container">
+                        <h2>نتيجة الاختبار - العناية المركزة العصبية</h2>
+                        <div class="result-score">${score}/${questions.length}</div>
+                        <div class="result-score">${percentage.toFixed(1)}%</div>
+                        <div class="result-message">${message}</div>
+                        <div class="result-actions">
+                            <button class="btn btn-primary" id="restart-btn">
+                                <i class="fas fa-redo" style="margin-left: 8px;"></i>
+                                إعادة الاختبار
+                            </button>
+                            <button class="btn btn-outline" id="share-btn">
+                                <i class="fab fa-telegram" style="margin-left: 8px;"></i>
+                                مشاركة النتيجة
+                            </button>
+                        </div>
+                        <div class="detailed-results">
+                            <h3>التفاصيل الكاملة للإجابات</h3>
+                            ${detailedResults}
+                        </div>
+                    </div>
+                `;
+                
+                // إضافة أحداث النقر للأزرار
+                document.getElementById('restart-btn').addEventListener('click', startNewTest);
+                document.getElementById('share-btn').addEventListener('click', shareResult);
+                
+                // تحديث سجل الاختبارات
+                displayTestHistory();
+            }
+
+            // مشاركة النتيجة على Telegram
+            function shareResult() {
+                const score = userAnswers.filter((answer, index) => 
+                    answer === questions[index].correctAnswer
+                ).length;
+                
+                const percentage = (score / questions.length) * 100;
+                
+                const shareText = `حصلت على ${score}/${questions.length} (${percentage.toFixed(1)}%) في اختبار العناية المركزة العصبية!\n\nموقع موسوعة التخدير:\nhttps://mohamed58902.github.io/Encyclopedia-of-Anesthesia/`;
+                const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent('https://mohamed58902.github.io/Encyclopedia-of-Anesthesia/')}&text=${encodeURIComponent(shareText)}`;
+                
+                window.open(telegramUrl, '_blank');
+            }
+
+            // بدء المؤقت
+            function startTimer() {
+                const timerElement = document.getElementById('quiz-timer');
+                let startTime = currentTestStartTime ? new Date(currentTestStartTime) : new Date();
+                
+                function updateTimer() {
+                    const currentTime = new Date();
+                    const elapsedTime = Math.floor((currentTime - startTime) / 1000);
+                    const minutes = Math.floor(elapsedTime / 60);
+                    const seconds = elapsedTime % 60;
+                    
+                    timerElement.textContent = `الوقت: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }
+                
+                updateTimer();
+                const timerInterval = setInterval(updateTimer, 1000);
+                
+                // تنظيف المؤقت عند إنهاء الاختبار
+                if (!testInProgress) {
+                    clearInterval(timerInterval);
+                }
+            }
+
+            // عرض سجل الاختبارات (الجديدة فقط)
+            function displayTestHistory() {
+                const historyList = document.getElementById('history-list');
+                const newTests = filterNewTests();
+                
+                if (newTests.length === 0) {
+                    historyList.innerHTML = '<p style="text-align: center; color: var(--text-color); opacity: 0.7;">لا توجد اختبارات سابقة</p>';
+                    return;
+                }
+                
+                historyList.innerHTML = newTests.map(test => `
+                    <div class="history-item">
+                        <span class="history-date">${test.date}</span>
+                        <span class="history-score">${test.score}/${test.total} (${test.percentage}%)</span>
+                    </div>
+                `).join('');
+            }
+
+            // تحميل الأسئلة كملف PDF - فتح الرابط المطلوب
+            document.getElementById('downloadPdf').addEventListener('click', function() {
+                window.open('https://drive.google.com/file/d/1kLu_vn6FR50LPJJHwhUiBZfb2mpuzGbT/view?usp=sharing', '_blank');
+            });
+
+            // تهيئة الاختبار عند تحميل الصفحة
+            initQuiz();
+        });
+    </script>
+</body>
+</html>
